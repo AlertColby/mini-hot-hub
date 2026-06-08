@@ -1,0 +1,50 @@
+[
+  {
+    "platform": "weibo",
+    "updatedAt": "2026-06-07T14:00:00.000Z",
+    "items": [
+      { "rank": 1, "title": "高考首日各地考生顺利开考", "heat": "286万", "url": "https://s.weibo.com/weibo?q=%E9%AB%98%E8%80%83%E9%A6%96%E6%97%A5", "platform": "weibo" },
+      { "rank": 2, "title": "某明星官宣结婚", "heat": "198万", "url": "https://s.weibo.com/weibo?q=%E6%98%8E%E6%98%9F%E7%BB%93%E5%A9%9A", "platform": "weibo" },
+      { "rank": 3, "title": "多地发布高温预警", "heat": "156万", "url": "https://s.weibo.com/weibo?q=%E9%AB%98%E6%B8%A9%E9%A2%84%E8%AD%A6", "platform": "weibo" },
+      { "rank": 4, "title": "AI 大模型再迎突破", "heat": "132万", "url": "https://s.weibo.com/weibo?q=AI%E5%A4%A7%E6%A8%A1%E5%9E%8B", "platform": "weibo" },
+      { "rank": 5, "title": "国产新能源车销量创新高", "heat": "98万", "url": "https://s.weibo.com/weibo?q=%E6%96%B0%E8%83%BD%E6%BA%90%E8%BD%A6", "platform": "weibo" },
+      { "rank": 6, "title": "世界杯预选赛精彩瞬间", "heat": "87万", "url": "https://s.weibo.com/weibo?q=%E4%B8%96%E7%95%8C%E6%9D%AF", "platform": "weibo" },
+      { "rank": 7, "title": "端午节假期出行攻略", "heat": "76万", "url": "https://s.weibo.com/weibo?q=%E7%AB%AF%E5%8D%88%E8%8A%82", "platform": "weibo" },
+      { "rank": 8, "title": "某综艺收官引热议", "heat": "65万", "url": "https://s.weibo.com/weibo?q=%E7%BB%BC%E8%89%BA", "platform": "weibo" },
+      { "rank": 9, "title": "程序员副业话题登上热搜", "heat": "54万", "url": "https://s.weibo.com/weibo?q=%E7%A8%8B%E5%BA%8F%E5%91%98", "platform": "weibo" },
+      { "rank": 10, "title": "城市马拉松报名火爆", "heat": "43万", "url": "https://s.weibo.com/weibo?q=%E9%A9%AC%E6%8B%89%E6%9D%BE", "platform": "weibo" }
+    ]
+  },
+  {
+    "platform": "zhihu",
+    "updatedAt": "2026-06-07T14:00:00.000Z",
+    "items": [
+      { "rank": 1, "title": "为什么越来越多年轻人选择躺平？", "heat": "985 万热度", "url": "https://www.zhihu.com/question/10001", "platform": "zhihu" },
+      { "rank": 2, "title": "如何评价最新发布的国产芯片？", "heat": "756 万热度", "url": "https://www.zhihu.com/question/10002", "platform": "zhihu" },
+      { "rank": 3, "title": "高考结束后应该做什么？", "heat": "623 万热度", "url": "https://www.zhihu.com/question/10003", "platform": "zhihu" },
+      { "rank": 4, "title": "程序员 35 岁危机是真实存在的吗？", "heat": "512 万热度", "url": "https://www.zhihu.com/question/10004", "platform": "zhihu" },
+      { "rank": 5, "title": "有哪些值得推荐的开源项目？", "heat": "445 万热度", "url": "https://www.zhihu.com/question/10005", "platform": "zhihu" },
+      { "rank": 6, "title": "为什么现在的电视剧越来越难看了？", "heat": "398 万热度", "url": "https://www.zhihu.com/question/10006", "platform": "zhihu" },
+      { "rank": 7, "title": "独居生活有哪些提升幸福感的小技巧？", "heat": "356 万热度", "url": "https://www.zhihu.com/question/10007", "platform": "zhihu" },
+      { "rank": 8, "title": "如何系统学习 TypeScript？", "heat": "312 万热度", "url": "https://www.zhihu.com/question/10008", "platform": "zhihu" },
+      { "rank": 9, "title": "为什么很多人开始反感算法推荐？", "heat": "278 万热度", "url": "https://www.zhihu.com/question/10009", "platform": "zhihu" },
+      { "rank": 10, "title": "有哪些适合夏天的低卡食谱？", "heat": "245 万热度", "url": "https://www.zhihu.com/question/10010", "platform": "zhihu" }
+    ]
+  },
+  {
+    "platform": "bilibili",
+    "updatedAt": "2026-06-07T14:00:00.000Z",
+    "items": [
+      { "rank": 1, "title": "【鬼畜】今日热点大盘点", "heat": "125.6万", "url": "https://search.bilibili.com/all?keyword=%E9%AC%BC%E7%95%9C", "platform": "bilibili" },
+      { "rank": 2, "title": "原神新版本前瞻直播", "heat": "98.3万", "url": "https://search.bilibili.com/all?keyword=%E5%8E%9F%E7%A5%9E", "platform": "bilibili" },
+      { "rank": 3, "title": "一口气看完某悬疑剧解说", "heat": "87.1万", "url": "https://search.bilibili.com/all?keyword=%E6%82%AC%E7%96%91%E5%89%A7", "platform": "bilibili" },
+      { "rank": 4, "title": "程序员的一天 Vlog", "heat": "76.5万", "url": "https://search.bilibili.com/all?keyword=%E7%A8%8B%E5%BA%8F%E5%91%98", "platform": "bilibili" },
+      { "rank": 5, "title": "美食 UP 主挑战 24 小时只吃泡面", "heat": "65.2万", "url": "https://search.bilibili.com/all?keyword=%E6%B3%A1%E9%9D%A2", "platform": "bilibili" },
+      { "rank": 6, "title": "高考加油混剪催泪向", "heat": "58.9万", "url": "https://search.bilibili.com/all?keyword=%E9%AB%98%E8%80%83", "platform": "bilibili" },
+      { "rank": 7, "title": "AI 绘画教程零基础入门", "heat": "52.4万", "url": "https://search.bilibili.com/all?keyword=AI%E7%BB%98%E7%94%BB", "platform": "bilibili" },
+      { "rank": 8, "title": "街头采访：你最想对十年前的自己说什么", "heat": "47.8万", "url": "https://search.bilibili.com/all?keyword=%E8%A1%97%E5%A4%B4%E9%87%87%E8%AE%BF", "platform": "bilibili" },
+      { "rank": 9, "title": "猫咪迷惑行为大赏", "heat": "41.3万", "url": "https://search.bilibili.com/all?keyword=%E7%8C%AB%E5%92%AA", "platform": "bilibili" },
+      { "rank": 10, "title": "React 19 新特性详解", "heat": "36.7万", "url": "https://search.bilibili.com/all?keyword=React19", "platform": "bilibili" }
+    ]
+  }
+]

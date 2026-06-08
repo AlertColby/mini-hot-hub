@@ -1,4 +1,4 @@
-# HotNews 技术设计文档
+# mini-hot-hub 技术设计文档
 
 > v1.1 · 2026-06-07 · 阶段：技术设计
 >
@@ -109,7 +109,7 @@
 ## 3. 项目结构
 
 ```
-HotNews/
+mini-hot-hub/
 ├── client/                     # 前端 SPA
 │   ├── index.html
 │   ├── vite.config.ts
@@ -512,7 +512,7 @@ useHotData()                    ← 单次 fetch /api/hot
 #### `<Header>`
 
 - Props：`updatedAt: string | null`（全局最新时间）
-- 展示 Logo 文字 "HotNews" + 相对时间
+- 展示 Logo 文字 "mini-hot-hub" + 相对时间
 - 无数据时不显示时间
 
 #### `<HotBoard>`
@@ -733,10 +733,10 @@ interface ApiError {
 | 变量 | 服务 | 说明 | 默认值 | 示例 |
 |------|------|------|--------|------|
 | `PORT` | Server | Express 监听端口 | `3001` | `3001` |
-| `CORS_ORIGIN` | Server | 允许的前端域名 | — | `https://hotnews.vercel.app` |
+| `CORS_ORIGIN` | Server | 允许的前端域名 | — | `https://mini-hot-hub.vercel.app` |
 | `CRON_INTERVAL` | Server | 上游抓取间隔（分钟） | `12` | `12` |
 | `CACHE_TTL` | Server | API 可读缓存 TTL（秒） | `1800` | `1800` |
-| `VITE_API_BASE` | Client | 生产环境后端 API 地址 | — | `https://hotnews-api.railway.app` |
+| `VITE_API_BASE` | Client | 生产环境后端 API 地址 | — | `https://mini-hot-hub-api.railway.app` |
 
 > `CACHE_TTL` 须大于 `CRON_INTERVAL × 60`，见 §4.4 缓存策略。
 
@@ -748,7 +748,7 @@ Vercel
   ├── Build Command: cd client && npm run build
   ├── Output Directory: client/dist
   ├── Environment:
-  │     VITE_API_BASE = https://hotnews-api.railway.app
+  │     VITE_API_BASE = https://mini-hot-hub-api.railway.app
   └── 自动 HTTPS + CDN
 ```
 
@@ -761,7 +761,7 @@ Railway
   ├── Start Command: cd server && node dist/index.js
   ├── Environment:
   │     PORT = 3001
-  │     CORS_ORIGIN = https://hotnews.vercel.app
+  │     CORS_ORIGIN = https://mini-hot-hub.vercel.app
   │     CRON_INTERVAL = 12
   │     CACHE_TTL = 1800
   └── 自动 HTTPS
