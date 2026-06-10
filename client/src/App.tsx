@@ -1,45 +1,13 @@
-import { useEffect, useState } from 'react';
-import { fetchHotLists } from './api/hot';
-import type { HotList } from './types/hot';
+import { HotCard } from './components/HotCard';
+import { useHotList } from './hooks/useHotList';
+import type { PlatformId } from './types/hot';
+import './App.css';
 
-const PLATFORM_NAMES: Record<string, string> = {
-  weibo: '微博热搜',
-  zhihu: '知乎热榜',
-  bilibili: 'B 站热搜',
-};
+const PLATFORM_ORDER: PlatformId[] = ['weibo', 'zhihu', 'bilibili'];
 
 function App() {
-  const [lists, setLists] = useState<HotList[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    fetchHotLists()
-      .then((data) => {
-        if (!cancelled) setLists(data);
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false);
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="app">
-        <header className="header">
-          <h1 className="logo">mini-hot-hub</h1>
-        </header>
-        <main className="main">
-          <p className="loading">加载中…</p>
-        </main>
-      </div>
-    );
-  }
+  const { platforms, loading, error, retryPlatform, retryingPlatforms } =
+    useHotList();
 
   return (
     <div className="app">
@@ -48,34 +16,39 @@ function App() {
         <p className="subtitle">微博 · 知乎 · B 站 热榜聚合</p>
       </header>
 
+      {error ? (
+        <p className="error-banner" role="alert">
+          {error}
+        </p>
+      ) : null}
+
       <main className="board-grid">
-        {lists.map((list) => (
-          <section key={list.platform} className="board">
-            <h2 className="board-title">
-              {PLATFORM_NAMES[list.platform] ?? list.platform}
-            </h2>
-            <ol className="hot-list">
-              {list.items.map((item) => (
-                <li key={item.rank} className="hot-item">
-                  <span className={`rank rank-${item.rank}`}>{item.rank}</span>
-                  <a
-                    className="title"
-                    href={item.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {item.title}
-                  </a>
-                  <span className="heat">{item.heat}</span>
-                </li>
-              ))}
-            </ol>
-          </section>
-        ))}
+        {loading
+          ? PLATFORM_ORDER.map((platformId) => (
+              <article key={platformId} className="hot-card hot-card--loading">
+                <p className="loading">加载中…</p>
+              </article>
+            ))
+          : platforms.map((platform) => (
+              <HotCard
+                key={platform.platformId}
+                platform={platform}
+                retrying={retryingPlatforms.has(platform.platformId)}
+                onRetry={
+                  platform.error
+                    ? () => retryPlatform(platform.platformId)
+                    : undefined
+                }
+              />
+            ))}
       </main>
 
       <footer className="footer">
-        <p>学习项目 · 非商用 · React + TypeScript + Vite</p>
+        <p>个人学习项目，仅供技术研究，非商用。</p>
+        <p>
+          本站仅展示各平台公开热榜中的标题、排名、热度及原文链接，不存储或镜像任何正文内容；版权归原作者及原平台所有。
+        </p>
+        <p>React + TypeScript + Vite · Node.js + Express</p>
       </footer>
     </div>
   );
