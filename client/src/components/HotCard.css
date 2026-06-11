@@ -134,3 +134,9 @@
   color: #aaa;
   text-align: right;
 }
+
+.hot-card__cache-hint {
+  margin: 0.25rem 0 0;
+  font-size: 0.6875rem;
+  color: #c5c5c5;
+}

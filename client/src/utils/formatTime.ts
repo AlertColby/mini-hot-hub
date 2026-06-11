@@ -1,11 +1,11 @@
 /** 格式化为「更新于 xx」相对时间文案 */
-export function formatUpdatedAt(iso: string): string {
+export function formatUpdatedAt(iso: string, now = Date.now()): string {
   const date = new Date(iso);
   if (Number.isNaN(date.getTime())) {
     return '更新于 —';
   }
 
-  const diffMs = Date.now() - date.getTime();
+  const diffMs = now - date.getTime();
   const diffSec = Math.floor(diffMs / 1000);
 
   if (diffSec < 60) {

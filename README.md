@@ -120,6 +120,28 @@ proxy: {
 5. **CORS 跨域（直连后端时）**  
    若前端未走代理、直接请求 `http://localhost:3001`，需保证后端 `CORS_ORIGIN` 与前端地址一致（默认 `http://localhost:5173`）。
 
+## 数据来源说明
+
+本项目的榜单数据由后端从各平台 **公开 JSON 接口** 抓取，经内存缓存后通过 `/api/hot` 提供给前端；**不解析 HTML 页面**。
+
+| 平台 | 接口 | 主要字段 |
+|------|------|----------|
+| 微博 | `https://weibo.com/ajax/side/hotSearch` | `data.realtime[]` → 标题、热度、排名 |
+| 知乎 | `https://api.zhihu.com/topstory/hot-lists/total?limit=20` | `data[].target` → 标题、链接；`detail_text` → 热度 |
+| B 站 | `https://api.bilibili.com/x/web-interface/wbi/search/square?limit=20` | `data.trending.list[]` → 关键词、热度 |
+
+各平台缓存 key 相互独立（`hot:weibo`、`hot:zhihu`、`hot:bilibili`）。单平台刷新使用 `GET /api/hot/:platform?refresh=1`，不会影响其他平台的缓存。
+
+### 更新频率
+
+- 后端对成功抓取的结果做内存缓存，默认 **TTL 为 600 秒（10 分钟）**，可通过环境变量 `CACHE_TTL`（单位：秒）调整。
+- 缓存有效期内重复访问 `/api/hot` 返回缓存数据，`updatedAt` 保持不变属正常现象。
+- 缓存过期后，下一次 API 请求会重新抓取对应平台；失败时不写入缓存，并返回带 `error` 的降级响应。
+
+### 免责声明
+
+本项目仅供 **个人学习与技术交流**，非商业产品，与各平台（微博、知乎、哔哩哔哩）**无任何官方关联或授权**。所展示的热榜内容版权归原作者及相应平台所有；链接跳转至第三方网站，请遵守各平台服务条款。接口字段可能随时变更，数据仅供参考，不保证实时性与完整性。
+
 ## 相关文档
 
 - [PRD](docs/PRD.md) · [技术设计](docs/TECH_DESIGN.md) · [开发指令](docs/AGENTS.md)
