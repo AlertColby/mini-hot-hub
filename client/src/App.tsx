@@ -1,19 +1,60 @@
 import { HotCard } from './components/HotCard';
 import { useHotList } from './hooks/useHotList';
+import { useNow } from './hooks/useNow';
 import type { PlatformId } from './types/hot';
+import { formatRelativeTime } from './utils/formatTime';
 import './App.css';
 
 const PLATFORM_ORDER: PlatformId[] = ['weibo', 'zhihu', 'bilibili'];
 
+function getLatestUpdatedAt(platforms: { updatedAt: string }[]): string | null {
+  if (platforms.length === 0) {
+    return null;
+  }
+  return platforms.reduce(
+    (latest, platform) =>
+      platform.updatedAt > latest ? platform.updatedAt : latest,
+    platforms[0].updatedAt,
+  );
+}
+
 function App() {
-  const { platforms, loading, error, retryPlatform, retryingPlatforms } =
-    useHotList();
+  const now = useNow();
+  const {
+    platforms,
+    loading,
+    refreshing,
+    error,
+    refresh,
+    retryPlatform,
+    retryingPlatforms,
+  } = useHotList();
+
+  const latestUpdatedAt = getLatestUpdatedAt(platforms);
 
   return (
     <div className="app">
       <header className="header">
-        <h1 className="logo">mini-hot-hub</h1>
-        <p className="subtitle">微博 · 知乎 · B 站 热榜聚合</p>
+        <div className="header__main">
+          <h1 className="logo">mini-hot-hub</h1>
+          <p className="subtitle">微博 · 知乎 · B 站 热榜聚合</p>
+          {!loading && latestUpdatedAt ? (
+            <p className="header__updated">
+              <time dateTime={latestUpdatedAt}>
+                更新于 {formatRelativeTime(latestUpdatedAt, now)}
+              </time>
+            </p>
+          ) : null}
+        </div>
+        <button
+          type="button"
+          className="header__refresh"
+          onClick={refresh}
+          disabled={loading || refreshing}
+          aria-label="刷新热榜"
+        >
+          {refreshing ? '刷新中…' : '刷新'}
+        </button>
       </header>
 
       {error ? (

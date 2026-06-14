@@ -33,10 +33,17 @@ function toHotPlatform(list: HotList): HotPlatform {
 export function useHotList() {
   const [platforms, setPlatforms] = useState<HotPlatform[]>([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [retryingPlatforms, setRetryingPlatforms] = useState<Set<PlatformId>>(
     () => new Set(),
   );
+
+  const loadAll = useCallback(async () => {
+    const data = await fetchAllHot();
+    setPlatforms(sortByPlatformOrder(data).map(toHotPlatform));
+    setError(null);
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -62,6 +69,17 @@ export function useHotList() {
       cancelled = true;
     };
   }, []);
+
+  const refresh = useCallback(async () => {
+    setRefreshing(true);
+    try {
+      await loadAll();
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : '刷新失败');
+    } finally {
+      setRefreshing(false);
+    }
+  }, [loadAll]);
 
   const retryPlatform = useCallback(async (platformId: PlatformId) => {
     setRetryingPlatforms((prev) => new Set(prev).add(platformId));
@@ -91,5 +109,13 @@ export function useHotList() {
     }
   }, []);
 
-  return { platforms, loading, error, retryPlatform, retryingPlatforms };
+  return {
+    platforms,
+    loading,
+    refreshing,
+    error,
+    refresh,
+    retryPlatform,
+    retryingPlatforms,
+  };
 }

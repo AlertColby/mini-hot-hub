@@ -1,6 +1,6 @@
 import { useNow } from '../hooks/useNow';
 import type { HotPlatform } from '../types/hot';
-import { formatUpdatedAt } from '../utils/formatTime';
+import { formatRelativeTime } from '../utils/formatTime';
 import './HotCard.css';
 
 interface HotCardProps {
@@ -64,7 +64,7 @@ export function HotCard({ platform, retrying = false, onRetry }: HotCardProps) {
 
       <footer className="hot-card__footer">
         <time dateTime={updatedAt} title="服务端缓存期间为上次抓取时间，不会随页面刷新更新">
-          {formatUpdatedAt(updatedAt, now)}
+          更新于 {formatRelativeTime(updatedAt, now)}
         </time>
         <p className="hot-card__cache-hint">缓存期内时间不变属正常现象</p>
       </footer>

@@ -9,39 +9,91 @@
 
 ## 安装依赖
 
-前后端各自独立管理依赖，需分别在两个目录下安装：
+前后端各自独立管理依赖。推荐在**项目根目录**一次性安装：
 
 ```bash
-# 后端
-cd server
-npm install
+npm install          # 根目录 dev 工具（concurrently）
+npm run install:all  # 安装 server/ 与 client/ 依赖
+```
 
-# 前端
-cd ../client
-npm install
+也可分别在子目录安装：
+
+```bash
+cd server && npm install
+cd ../client && npm install
 ```
 
 ## 本地开发
 
-开发时需要**同时**启动后端与前端（建议开两个终端）。
+开发时需要**同时**启动后端与前端。
 
-**终端 1 — 启动后端**（默认 `http://localhost:3001`）：
+### 方式一：根目录一条命令（推荐）
 
 ```bash
-cd server
 npm run dev
+```
+
+`concurrently` 会并行启动后端（`:3001`）与前端（`:5173`）。
+
+### 方式二：分开两个终端
+
+**终端 1 — 后端**（默认 `http://localhost:3001`）：
+
+```bash
+npm run dev:server
+# 或 cd server && npm run dev
 ```
 
 看到 `[server] listening on :3001` 即表示后端已就绪。
 
-**终端 2 — 启动前端**（默认 `http://localhost:5173`）：
+**终端 2 — 前端**（默认 `http://localhost:5173`）：
 
 ```bash
-cd client
-npm run dev
+npm run dev:client
+# 或 cd client && npm run dev
 ```
 
 浏览器访问 [http://localhost:5173](http://localhost:5173)。前端通过 Vite 开发代理将 `/api/*` 转发到后端，无需额外配置。
+
+### 根目录脚本一览
+
+| 脚本 | 说明 |
+|------|------|
+| `npm run dev` | 同时启动前后端 |
+| `npm run dev:server` | 仅启动后端 |
+| `npm run dev:client` | 仅启动前端 |
+| `npm run build` | 构建前后端 |
+| `npm run build:server` | 仅构建后端 |
+| `npm run build:client` | 仅构建前端 |
+| `npm run start:server` | 启动已构建的后端（生产） |
+| `npm run install:all` | 安装 server 与 client 依赖 |
+
+## 部署
+
+### Railway（后端，从根目录启动）
+
+在 Railway 新建服务并关联本仓库后，**Root Directory 保持为空**（使用仓库根目录），在 Settings → Deploy 中配置：
+
+| 配置项 | 值 |
+|--------|-----|
+| **Build Command** | `npm install --prefix server && npm run build:server` |
+| **Start Command** | `npm run start:server` |
+
+说明：
+
+- Railway 检测到根目录 `package.json` 时会先执行 `npm install`，安装 `concurrently` 等根级 dev 依赖；Build Command 再为 `server/` 安装生产依赖并执行 `tsc` 编译。
+- `start:server` 等价于 `cd server && node dist/index.js`（即 `server/package.json` 的 `start` 脚本）。
+- 环境变量示例：`CORS_ORIGIN`（前端域名）、`CRON_INTERVAL`（默认 12）、`CACHE_TTL`（默认 1800）。`PORT` 由 Railway 自动注入，无需手动设置。
+
+**备选**：将 Railway 的 Root Directory 设为 `server`，则 Build / Start 可简化为 `npm install && npm run build` 与 `npm start`，无需根目录脚本。
+
+### Vercel（前端）
+
+| 配置项 | 值 |
+|--------|-----|
+| **Build Command** | `cd client && npm install && npm run build` |
+| **Output Directory** | `client/dist` |
+| **Environment** | `VITE_API_BASE` = Railway 后端公网地址 |
 
 ### 验证接口
 

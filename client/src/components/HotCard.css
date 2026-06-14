@@ -135,6 +135,21 @@
   text-align: right;
 }
 
+@media (max-width: 767px) {
+  .hot-card {
+    padding: 0.875rem 1rem;
+  }
+
+  .hot-card__item {
+    padding: 0.625rem 0;
+    gap: 0.625rem;
+  }
+
+  .hot-card__footer {
+    margin-top: 0.625rem;
+  }
+}
+
 .hot-card__cache-hint {
   margin: 0.25rem 0 0;
   font-size: 0.6875rem;
