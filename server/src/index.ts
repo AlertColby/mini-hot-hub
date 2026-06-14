@@ -14,10 +14,16 @@ import type {
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3001;
-const CORS_ORIGIN = (process.env.CORS_ORIGIN ?? 'http://localhost:5173').replace(
-  /\/$/,
-  '',
-);
+const DEFAULT_CORS_ORIGIN = 'http://localhost:5173';
+
+function normalizeOrigin(origin: string): string {
+  return origin.replace(/\/$/, '');
+}
+
+function getAllowedOrigins(): string[] {
+  const raw = process.env.CORS_ORIGIN ?? DEFAULT_CORS_ORIGIN;
+  return raw.split(',').map((origin) => normalizeOrigin(origin.trim()));
+}
 
 const PLATFORMS: PlatformId[] = ['weibo', 'zhihu', 'bilibili'];
 
@@ -163,7 +169,20 @@ async function buildPlatformHotListSafe(
 
 app.use(
   cors({
-    origin: CORS_ORIGIN,
+    origin(origin, callback) {
+      if (!origin) {
+        callback(null, true);
+        return;
+      }
+
+      const allowed = getAllowedOrigins();
+      if (allowed.includes(normalizeOrigin(origin))) {
+        callback(null, origin);
+        return;
+      }
+
+      callback(null, false);
+    },
   }),
 );
 

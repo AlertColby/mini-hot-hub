@@ -1,6 +1,7 @@
 import type { HotList, PlatformId } from '../types/hot';
 
-const API_BASE = import.meta.env.VITE_API_BASE ?? '';
+// 生产环境走同源 /api（Vercel rewrite 代理到 Railway）；开发环境走 Vite 代理。
+const API_BASE = import.meta.env.PROD ? '' : (import.meta.env.VITE_API_BASE ?? '');
 
 interface HotListAggregate {
   platforms: HotList[];
