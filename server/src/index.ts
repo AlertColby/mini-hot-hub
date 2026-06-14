@@ -14,7 +14,10 @@ import type {
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3001;
-const CORS_ORIGIN = process.env.CORS_ORIGIN ?? 'http://localhost:5173';
+const CORS_ORIGIN = (process.env.CORS_ORIGIN ?? 'http://localhost:5173').replace(
+  /\/$/,
+  '',
+);
 
 const PLATFORMS: PlatformId[] = ['weibo', 'zhihu', 'bilibili'];
 
@@ -167,6 +170,13 @@ app.use(
 app.use((req, _res, next) => {
   console.log(req.path);
   next();
+});
+
+app.get('/', (_req, res) => {
+  res.json({
+    name: 'mini-hot-hub API',
+    endpoints: ['/api/health', '/api/hot', '/api/hot/:platform'],
+  });
 });
 
 app.get('/api/health', (_req, res) => {
